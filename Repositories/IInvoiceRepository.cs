@@ -6,6 +6,6 @@ namespace InvoiceProcessingService.Repositories
     {
         Task<Invoice> AddAsync(Invoice invoice);
         Task<IEnumerable<Invoice>> GetAllAsync();
-        Task<Invoice> GetByIdAsync(int id);
+        Task<Invoice?> GetByIdAsync(int id);
     }
 }
