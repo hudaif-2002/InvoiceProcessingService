@@ -6,7 +6,7 @@ namespace InvoiceProcessingService.Services
     public interface IInvoiceService
     {
             Task<Invoice> CreateInvoice(CreateInvoiceDto dto);
-            Task<List<Invoice>> GetAllInvoiceAsync();
+            Task<IEnumerable<Invoice>> GetAllInvoiceAsync();
             Task<Invoice> GetById(int id);
     }
 }
