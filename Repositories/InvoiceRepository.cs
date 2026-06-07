@@ -1,11 +1,10 @@
 ﻿using InvoiceProcessingService.Models;
-using InvoiceProcessingService.DTOs;
 using InvoiceProcessingService.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceProcessingService.Repositories
 {
-    public class InvoiceRepository
+    public class InvoiceRepository : IInvoiceRepository
     {
         private readonly AppDbContext _dbcontext;
 
@@ -24,7 +23,5 @@ namespace InvoiceProcessingService.Repositories
             await _dbcontext.SaveChangesAsync();
             return invoice;
         }
-
-
     }
 }

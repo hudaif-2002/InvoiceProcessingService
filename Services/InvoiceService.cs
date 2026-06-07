@@ -1,28 +1,28 @@
 ﻿using InvoiceProcessingService.DTOs;
 using InvoiceProcessingService.Models;
 using InvoiceProcessingService.Repositories;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace InvoiceProcessingService.Services
 {
     public class InvoiceService : IInvoiceService
     {
         private readonly IInvoiceRepository _invoiceRepository;
-        private readonly ILogger _logger;
+        private readonly Serilog.ILogger _logger;
 
-        public InvoiceService(IInvoiceRepository invoiceRepository, ILogger logger)
+        public InvoiceService(IInvoiceRepository invoiceRepository)
         {
             _invoiceRepository = invoiceRepository;
-            _logger = logger;
+            _logger = Log.ForContext<InvoiceService>();
         }
 
         public async Task<Invoice> GetById(int id)
         {
-            _logger.LogInformation("Fetching invoice with ID {InvoiceId}", id);
+            _logger.Information("Fetching invoice with ID {InvoiceId}", id);
             var invoice = await _invoiceRepository.GetByIdAsync(id);
             if (invoice == null)
             {
-                _logger.LogWarning("Invoice with ID {InvoiceId} not found", id);
+                _logger.Warning("Invoice with ID {InvoiceId} not found", id);
                 throw new KeyNotFoundException($"Invoice with ID {id} not found.");
             }
             return invoice;
@@ -30,7 +30,7 @@ namespace InvoiceProcessingService.Services
 
         public async Task<IEnumerable<Invoice>> GetAllInvoiceAsync()
         {
-            _logger.LogInformation("Fetching all invoices");
+            _logger.Information("Fetching all invoices");
             return await _invoiceRepository.GetAllAsync();
         }
 
@@ -38,10 +38,10 @@ namespace InvoiceProcessingService.Services
         {
             if (dto.Amount <= 0)
             {
-                _logger.LogWarning("Attempted to create an invoice with invalid amount: {Amount}", dto.Amount);
+                _logger.Warning("Attempted to create an invoice with invalid amount: {Amount}", dto.Amount);
                 throw new ArgumentException("Amount must be greater than zero.");
             }
-            _logger.LogInformation("Creating a new invoice for {CustomerName}", dto.CustomerName);
+            _logger.Information("Creating a new invoice for {CustomerName}", dto.CustomerName);
             var invoice = new Invoice
             {
                 CustomerName = dto.CustomerName,
@@ -49,7 +49,7 @@ namespace InvoiceProcessingService.Services
                 CreatedAt = DateTime.UtcNow
             };
             await _invoiceRepository.AddAsync(invoice);
-            _logger.LogInformation("Invoice created with ID {InvoiceId}", invoice.Id);
+            _logger.Information("Invoice created with ID {InvoiceId}", invoice.Id);
             return invoice;
         }
     }

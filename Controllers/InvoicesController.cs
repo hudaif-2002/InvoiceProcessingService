@@ -32,9 +32,7 @@ namespace InvoiceProcessingService.Controllers
             try
             {
                 var invoice = await _invoiceService.CreateInvoice(dto);
-                //return CreatedAtAction(nameof(GetById), new { id = invoice.Id }, invoice);
-                return Ok($"invoice created: {invoice}");
-
+                return CreatedAtAction(nameof(GetById), new { id = invoice.Id }, invoice);
             }
             catch (Exception ex)
             {
