@@ -31,11 +31,25 @@ builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
 var app = builder.Build();
 
-// Auto-migrate database on startup
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
+    var maxRetries = 10;
+    var retryDelay = TimeSpan.FromSeconds(3);
+    for (int i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            dbContext.Database.Migrate();
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Database migration attempt {i + 1} failed: {ex.Message}");
+            if (i == maxRetries - 1) throw;
+            await Task.Delay(retryDelay);
+        }
+    }
 }
 
 app.UseSwagger();
