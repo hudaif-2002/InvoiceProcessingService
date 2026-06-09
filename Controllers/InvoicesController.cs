@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using InvoiceProcessingService.DTOs;
 using InvoiceProcessingService.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InvoiceProcessingService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class InvoicesController : Controller
