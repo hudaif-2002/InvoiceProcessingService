@@ -1,5 +1,9 @@
+using InvoiceProcessingService.DTOs;
+
 namespace InvoiceProcessingService.Services;
 public interface IAuthService
 {
-	string? Authenticate(string username, string password);
+    Task<bool> RegisterAsync(RegisterDto dto);
+
+    Task<string?> LoginAsync(LoginDto dto);
 }

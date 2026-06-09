@@ -8,5 +8,6 @@ namespace InvoiceProcessingService.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }
