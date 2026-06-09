@@ -1,40 +1,254 @@
-﻿# Invoice Processing Service
+# Invoice Processing Service
 
-A REST API for invoice processing built with **ASP.NET Core 8**, **Entity Framework Core**, **PostgreSQL**, **Serilog**, and **Docker**.
+A production-ready REST API for invoice processing built with **ASP.NET Core 8**, **Entity Framework Core**, **PostgreSQL**, **Serilog**, **Docker**, and **GitHub Actions**.
 
-## 🚀 Tech Stack
+The application can run:
 
-- ASP.NET Core 8 Web API
-- Entity Framework Core (Code‑First)
-- PostgreSQL (Npgsql)
-- Serilog (structured logging)
-- Docker & Docker Compose
-- GitHub Actions CI
+* Locally using PostgreSQL
+* Using Docker Compose (API + PostgreSQL containers)
+* In the cloud using Render and Neon PostgreSQL
 
-## 📦 Features
+---
 
-- Create invoice with business validation (amount > 0)
-- Retrieve all invoices / single invoice by ID
-- Structured logging with Serilog
-- Repository + Service pattern
-- Swagger documentation
-- Docker containerisation (API + PostgreSQL)
-- GitHub Actions CI (build on every push)
+## Tech Stack
 
-## 🛠️ Run Locally (without Docker)
+* ASP.NET Core 8 Web API
+* Entity Framework Core 8
+* PostgreSQL
+* Serilog
+* Swagger / OpenAPI
+* Docker
+* Docker Compose
+* GitHub Actions
+* Render
+* Neon PostgreSQL
+
+---
+
+## Features
+
+* Create invoices
+* Retrieve all invoices
+* Retrieve invoice by ID
+* Business validation
+* Repository Pattern
+* Service Layer Pattern
+* Entity Framework Core Code First
+* Structured Logging with Serilog
+* Dockerized Deployment
+* Cloud Deployment on Render
+* Continuous Integration with GitHub Actions
+
+---
+
+## Architecture
+
+```text
+Controller
+    ↓
+Service Layer
+    ↓
+Repository Layer
+    ↓
+Entity Framework Core
+    ↓
+PostgreSQL
+```
+
+---
+
+## Project Structure
+
+```text
+InvoiceProcessingService
+├── Controllers
+├── Data
+├── DTOs
+├── Migrations
+├── Models
+├── Repositories
+├── Services
+├── Program.cs
+├── Dockerfile
+├── docker-compose.yml
+├── appsettings.json
+└── .github/workflows
+```
+
+---
+
+## Run Locally (with PostgreSQL)
 
 ### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [PostgreSQL](https://www.postgresql.org/download/) running locally
 
-### Steps
-1. Clone the repo  
-2. Update connection string in `appsettings.json`
-3. Run `dotnet ef database update`
-4. Run `dotnet run`
-5. Open Swagger: `https://localhost:5001/swagger`
+* .NET 8 SDK
+* PostgreSQL
 
-## 🐳 Run with Docker Compose
+### 1. Configure the Database Connection
+
+Update the connection string in `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Database=InvoiceDb;Username=postgres;Password=your_password"
+  }
+}
+```
+
+### 2. Restore Dependencies
 
 ```bash
-docker-compose up -d
+dotnet restore
+```
+
+### 3. Apply Database Migrations
+
+```bash
+dotnet ef database update
+```
+
+### 4. Run the Application
+
+```bash
+dotnet run
+```
+
+### 5. Open Swagger UI
+
+```text
+https://localhost:5001/swagger
+```
+
+---
+
+## Run with Docker Compose
+
+The Docker Compose setup provisions both:
+
+* Invoice Processing API
+* PostgreSQL Database
+
+### Build and Start Containers
+
+```bash
+docker-compose up -d --build
+```
+
+### Access Swagger UI
+
+Wait 10–15 seconds for PostgreSQL to initialize, then open:
+
+```text
+http://localhost:8080/swagger
+```
+
+### Verify Database (Optional)
+
+Connect to the PostgreSQL container:
+
+```bash
+docker exec -it invoiceprocessingservice-postgres-1 psql -U postgres -d InvoiceDb
+```
+
+List available tables:
+
+```sql
+\dt
+```
+
+Expected tables:
+
+```text
+__EFMigrationsHistory
+Invoices
+```
+
+Exit PostgreSQL:
+
+```sql
+\q
+```
+
+### View Container Logs
+
+```bash
+docker-compose logs -f
+```
+
+### Stop Containers
+
+```bash
+docker-compose down
+```
+
+> The same Docker image is used for local Docker Compose deployments and cloud deployment on Render, ensuring consistent behavior across environments.
+
+---
+
+## Cloud Deployment
+
+### Render
+
+The application is deployed on Render using Docker and is publicly accessible via Swagger:
+
+```text
+https://invoice-api-23mm.onrender.com/swagger
+```
+
+### Neon PostgreSQL
+
+The cloud deployment uses Neon PostgreSQL as the managed database service.
+
+Connection details are provided through Render environment variables, allowing the same application codebase to run locally, in Docker, and in the cloud without modification.
+
+### Deployment Workflow
+
+```text
+GitHub Push
+      ↓
+GitHub Actions Build
+      ↓
+Render Deployment
+      ↓
+Neon PostgreSQL
+```
+
+
+---
+
+
+## CI/CD
+
+### GitHub Actions
+
+The pipeline automatically:
+
+* Restores dependencies
+* Builds the application
+* Validates every push to main
+
+### Deployment Flow
+
+```text
+GitHub Push
+      ↓
+GitHub Actions Build
+      ↓
+Render Deployment
+      ↓
+Neon PostgreSQL
+```
+
+---
+
+## Logging
+
+Serilog provides structured logging for:
+
+* Invoice creation
+* Validation failures
+* Startup events
+* Runtime exceptions
+
+
