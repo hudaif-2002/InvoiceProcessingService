@@ -15,7 +15,7 @@ public class  AuthService :IAuthService
 
     public string? Authenticate(string username, string password)
     {
-        if (username != "admin" && password != "password")
+        if (username != "admin" || password != "password")
             return null;
      
 
