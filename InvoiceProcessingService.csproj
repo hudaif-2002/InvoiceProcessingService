@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="frontend\.env" />
     <TypeScriptCompile Include="frontend\src\components\Navbar.jsx" />
   </ItemGroup>
 
