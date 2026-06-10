@@ -18,13 +18,15 @@ namespace InvoiceProcessingService.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDto request)
+        public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
-            var token = _authService.LoginAsync(request);
+            var token = await _authService.LoginAsync(request);
+
             if (token == null)
             {
                 return Unauthorized();
             }
+
             return Ok(new { Token = token });
         }
 
