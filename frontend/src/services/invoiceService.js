@@ -1,6 +1,7 @@
 ﻿import axios from "axios";
 
-const API_URL = "https://localhost:7120/api/invoices";
+const API_URL =
+    `${import.meta.env.VITE_API_BASE_URL}/invoices`;
 
 const getInvoices = async () => {
 
