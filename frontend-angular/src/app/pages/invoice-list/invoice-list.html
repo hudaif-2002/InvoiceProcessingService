@@ -1,0 +1,35 @@
+<h2>Invoices</h2>
+
+<p>Total invoices: {{ invoices.length }}</p>
+
+<table border="1">
+
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Customer</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let invoice of invoices">
+
+      <td>{{ invoice.id }}</td>
+
+      <td>{{ invoice.customerName }}</td>
+
+      <td>{{ invoice.amount }}</td>
+
+    </tr>
+
+  </tbody>
+
+</table>
+
+<br>
+
+<a routerLink="/create-invoice">
+  <button>Create Invoice</button>
+</a>

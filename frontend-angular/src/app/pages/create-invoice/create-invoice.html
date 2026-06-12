@@ -1,0 +1,19 @@
+<h2>Create Invoice</h2>
+
+<input type="text"
+       placeholder="Customer Name"
+       [(ngModel)]="customerName">
+
+<br>
+<br>
+
+<input type="number"
+       placeholder="Amount"
+       [(ngModel)]="amount">
+
+<br>
+<br>
+
+<button (click)="createInvoice()">
+  Save
+</button>

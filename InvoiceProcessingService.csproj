@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="frontend-angular\src\app\models\invoice.model.ts" />
+    <None Remove="frontend-angular\src\app\models\login.model.ts" />
+    <None Remove="frontend-angular\src\app\models\register.model.ts" />
+    <None Remove="frontend-angular\src\environments\environment.development.ts" />
+    <None Remove="frontend-angular\src\environments\environment.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
@@ -20,6 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="frontend-angular\src\app\models\invoice.model.ts" />
+    <TypeScriptCompile Include="frontend-angular\src\app\models\login.model.ts" />
+    <TypeScriptCompile Include="frontend-angular\src\app\models\register.model.ts" />
+    <TypeScriptCompile Include="frontend-angular\src\environments\environment.development.ts" />
+    <TypeScriptCompile Include="frontend-angular\src\environments\environment.ts" />
     <TypeScriptCompile Include="frontend\.env" />
     <TypeScriptCompile Include="frontend\src\components\Navbar.jsx" />
   </ItemGroup>
