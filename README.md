@@ -1,12 +1,13 @@
 # Invoice Processing Service
 
-A production-ready REST API for invoice processing built with **ASP.NET Core 8**, **Entity Framework Core**, **PostgreSQL**, **Serilog**, **Docker**, and **GitHub Actions**.
+A full-stack invoice processing application built with ASP.NET Core 8, React (Vite), Entity Framework Core, PostgreSQL, JWT Authentication, Serilog, Docker, and GitHub Actions.
 
 The application can run:
 
 * Locally using PostgreSQL
 * Using Docker Compose (API + PostgreSQL containers)
 * In the cloud using Render and Neon PostgreSQL
+* With a React frontend hosted on Render
 
 ---
 
@@ -22,7 +23,11 @@ The application can run:
 * GitHub Actions
 * Render
 * Neon PostgreSQL
-
+* React (Vite)
+* JWT Authentication
+* BCrypt Password Hashing
+* Bootstrap
+* Axios
 ---
 
 ## Features
@@ -38,20 +43,26 @@ The application can run:
 * Dockerized Deployment
 * Cloud Deployment on Render
 * Continuous Integration with GitHub Actions
-
+* JWT Authentication & Authorization
+* BCrypt Password Hashing
+* React Frontend
 ---
 
 ## Architecture
 
 ```text
-Controller
-    ↓
+React Frontend
+      ↓
+JWT Authentication
+      ↓
+ASP.NET Core Web API
+      ↓
 Service Layer
-    ↓
+      ↓
 Repository Layer
-    ↓
+      ↓
 Entity Framework Core
-    ↓
+      ↓
 PostgreSQL
 ```
 
@@ -68,6 +79,11 @@ InvoiceProcessingService
 ├── Models
 ├── Repositories
 ├── Services
+├── frontend
+│   ├── src
+│   ├── public
+│   ├── package.json
+│   └── vite.config.js
 ├── Program.cs
 ├── Dockerfile
 ├── docker-compose.yml
@@ -188,12 +204,20 @@ docker-compose down
 
 ## Cloud Deployment
 
-### Render
+### Backend (Render) 
 
 The application is deployed on Render using Docker and is publicly accessible via Swagger:
 
 ```text
 https://invoice-api-23mm.onrender.com/swagger
+```
+
+### Frontend (Render)
+
+The React frontend is deployed as a Render Static Site and communicates with the ASP.NET Core API using JWT authentication.
+
+```text
+https://invoiceprocessingservice.onrender.com
 ```
 
 ### Neon PostgreSQL
@@ -242,6 +266,26 @@ Neon PostgreSQL
 
 ---
 
+### Authentication
+
+The application uses JWT (JSON Web Tokens) for authentication and authorization.
+
+Authentication Flow
+```text
+User Registration
+      ↓
+User Login
+      ↓
+JWT Token Generated
+      ↓
+Token Stored in Browser
+      ↓
+Protected API Access
+```
+
+Passwords are securely hashed using BCrypt before being stored in the database.
+
+---
 ## Logging
 
 Serilog provides structured logging for:
