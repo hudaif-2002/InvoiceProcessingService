@@ -219,6 +219,12 @@ The React frontend is deployed as a Render Static Site and communicates with the
 ```text
 https://invoiceprocessingservice.onrender.com
 ```
+### Frontend (Angular)
+
+Also For Learning purpose  Angular frontend is deployed as a Render Static Site and communicates with the ASP.NET Core API using JWT authentication.
+```text
+https://invoiceprocessingserviceangular.onrender.com
+```
 
 ### Neon PostgreSQL
 
