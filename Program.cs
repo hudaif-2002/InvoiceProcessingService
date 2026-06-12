@@ -28,7 +28,8 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
             "http://localhost:5173",
             "http://localhost:4200",
-            "https://invoiceprocessingservice.onrender.com"
+            "https://invoiceprocessingservice.onrender.com",
+            "https://invoiceprocessingserviceangular.onrender.com"
         )
         .AllowAnyHeader()
         .AllowAnyMethod();
