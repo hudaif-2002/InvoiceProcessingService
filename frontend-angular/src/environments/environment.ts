@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://invoiceprocessingservice.onrender.com/api'
+  apiUrl: 'https://invoice-api-23mm.onrender.com/api'
 };
