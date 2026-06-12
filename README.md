@@ -212,7 +212,7 @@ The application is deployed on Render using Docker and is publicly accessible vi
 https://invoice-api-23mm.onrender.com/swagger
 ```
 
-### Frontend (Render)
+### Frontend (React)
 
 The React frontend is deployed as a Render Static Site and communicates with the ASP.NET Core API using JWT authentication.
 
